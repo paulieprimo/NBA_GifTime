@@ -1,32 +1,44 @@
   var nbaPlayers = ["Lebron James", "Kevin Durant", "James Harden", "Steph Curry", "Russel Westbrook"];
 
   function displayPlayerInfo() {
+    $("#superstar-view").empty();
 
-    var player = $(this).attr("data-name");
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + player + "&api_key=WJZl6YIKEjjDRZS0YHkR1QeYAe1vKLcD&limit=5";
+    var player = $(this).attr("button-name");
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + player + "&api_key=WJZl6YIKEjjDRZS0YHkR1QeYAe1vKLcD&limit=10";
     
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function(response) {
-
+      
       var nbaDiv = $("<div class='nba'>");
+      nbaDiv.append("<")
 
-      var rating = response.Rated;
+      for(var i = 0; i < 9; i++) {
+      
 
-      var pOne = $("<p>").text("Rating: " + rating);
+      var rating = response.data["" +i+ ""].rating;
 
-      nbaDiv.append(pOne);
+      var p = $("<p>").text("Rating: " + rating);
 
+      var imgURL = response.data["" +i+ ""].images.fixed_width.url;
+
+          // Creating an element to hold the image
+          var image = $("<img>").attr("src", imgURL);
+      
+      nbaDiv.append(p);
+      nbaDiv.append(image);
+
+      }
     
-      $("#superstar-view").prepend(nbaDiv);
+      $("#superstar-view").append(nbaDiv);
     });
 
   }
 
   function renderButtons() {
 
-    $("#buttons-view").empty();
+    $("#buttons-div").empty();
 
     for (var i = 0; i < nbaPlayers.length; i++) {
 
@@ -41,10 +53,10 @@
   $("#add-player").on("click", function(event) {
     event.preventDefault();
     
-    var playerText = $("#player-input").val();
+    var addP= $("#player-input").val().trim();
 
-    nbaPlayers.push(playerText);
-
+    nbaPlayers.push(addP);
+    console.log(addP);
     $("#buttons-div").empty();
     renderButtons();
   });
