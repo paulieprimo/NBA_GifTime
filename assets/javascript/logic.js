@@ -4,7 +4,7 @@
     $("#superstar-view").empty();
 
     var player = $(this).attr("button-name");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + player + "&api_key=WJZl6YIKEjjDRZS0YHkR1QeYAe1vKLcD&limit=10";
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + player + "&api_key=WJZl6YIKEjjDRZS0YHkR1QeYAe1vKLcD&limit=10";
     
     $.ajax({
       url: queryURL,
